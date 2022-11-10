@@ -18,6 +18,13 @@ export const AddTodo = (props) => {
         }
         
     }
+    let today = new Date();
+    let now = {
+        date : today.getDate().toString(),
+        month : (today.getMonth() + 1).toString(),
+        year : today.getFullYear().toString()
+    }
+    console.log(`${now.year}-${now.month}-${now.date}`);
     return (
     <div className={`container my-3 ${props.mode === 'light' ? 'lightModeColor' : 'darkModeColor'}`}>
         <h3 className="mb-4">Add new task</h3>
@@ -34,7 +41,7 @@ export const AddTodo = (props) => {
                     </div>
                     <div className="mb-3 col-md-6">
                         <label htmlFor="inputEndDate" className="form-label">Deadline</label>
-                        <input type="datetime-local" value={endDate} onChange={(e) =>setEndDate(e.target.value)} className={`form-control bg-transparent ${props.mode === 'light' ? 'lightModeColor' : 'darkModeColor darkModeCalender'}`} id="inputEndDate"/>
+                        <input type="datetime-local" value={endDate} onChange={(e) =>setEndDate(e.target.value)} className={`form-control bg-transparent ${props.mode === 'light' ? 'lightModeColor' : 'darkModeColor darkModeCalender'}`} id="inputEndDate" min={`${now.year}-${now.month}-${now.date}}`}/>
                     </div>
                     <button type="submit" className="btn btn-success px-5 py-2">Add Task</button>
                 </form>

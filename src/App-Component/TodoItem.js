@@ -6,38 +6,59 @@ export const TodoItem = (props) => {
 
         let date = (dateTime[0]).split('-');
         let time = (dateTime[1]).split(':');
-        let DD = date[2];
-        let mm;
-        switch(date[1]){
-            case 1: mm = "January";
-                break;
-            case 2: mm = "February";
-                break;
-            case 3: mm = "March";
-                break;
-            case 4: mm = "April";
-                break;
-            case 5: mm = "May";
-                break;
-            case 6: mm = "June";
-                break;
-            case 7: mm = "July";
-                break;
-            case 8: mm = "August";
-                break;
-            case 9: mm = "September";
-                break;
-            case 10: mm = "October";
-                break;
-            case 11: mm = "November";
-                break;
-            case 12: mm = "December";
-                break;
-            default : mm = date[1];
+        let dateFormat = {
+            DD : '',
+            mm : '',
+            YYYY : '',
+            HH : '',
+            MM : '',
+            AM_PM : ''
         }
-        let YYYY = date[0];
-        let HH = time[0];
-        let MM = time[1];
+        dateFormat.DD = date[2];
+        switch(date[1]){
+            case '1': dateFormat.mm = "January";
+                break;
+            case '2': dateFormat.mm = "February";
+                break;
+            case '3': dateFormat.mm = "March";
+                break;
+            case '4': dateFormat.mm = "April";
+                break;
+            case '5': dateFormat.mm = "May";
+                break;
+            case '6': dateFormat.mm = "June";
+                break;
+            case '7': dateFormat.mm = "July";
+                break;
+            case '8': dateFormat.mm = "August";
+                break;
+            case '9': dateFormat.mm = "September";
+                break;
+            case '10': dateFormat.mm = "October";
+                break;
+            case '11': dateFormat.mm = "November";
+                break;
+            case '12': dateFormat.mm = "December";
+                break;
+            default : dateFormat.mm = date[1];
+        }
+        dateFormat.YYYY = date[0];
+        let intHH = parseInt(time[0]);
+        if(intHH > 12){
+            dateFormat.HH = intHH-12;
+        } else if(intHH === 0){
+            dateFormat.HH = 12;
+        } else {
+            dateFormat.HH = intHH;
+        }
+        if(intHH > 11){
+            dateFormat.AM_PM = 'PM';
+        } else {
+            dateFormat.AM_PM = 'AM';
+        }
+        dateFormat.MM = time[1];
+
+
 
 
     return (
@@ -48,7 +69,7 @@ export const TodoItem = (props) => {
                     <p className="card-text">{props.todoItem.taskDescription}</p>
                 </div>
                 <div className="card-footer flex">
-                    {props.todoItem.endDate ? <span className="text-muted"><small>Deadline : {DD}/{mm}/{YYYY} Time {HH}:{MM} </small></span> : '' }
+                    {props.todoItem.endDate ? <span className="text-muted"><small>Deadline : {dateFormat.mm} {dateFormat.DD}, {dateFormat.YYYY} | {dateFormat.HH}:{dateFormat.MM} {dateFormat.AM_PM} </small></span> : '' }
                     <button className="btn btn-danger btn-sm float-end" onClick={()=>{props.onDelete(props.todoItem)}}>Delete</button>
                 </div>
             </div>            
